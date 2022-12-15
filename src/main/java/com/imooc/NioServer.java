@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class NioServer {
          * 1. 创建Selector
          */
         Selector selector = Selector.open();
+        System.out.println("server-----> " + selector);
 
         /**
          * 2. 通过ServerSocketChannel创建channel通道
@@ -119,7 +121,7 @@ public class NioServer {
         /**
          * 回复客户端提示信息
          */
-        socketChannel.write(Charset.forName("UTF-8")
+        socketChannel.write(StandardCharsets.UTF_8
                 .encode("你与聊天室里其他人都不是朋友关系，请注意隐私安全"));
     }
 
@@ -151,7 +153,7 @@ public class NioServer {
             /**
              * 读取buffer中的内容
              */
-            request += Charset.forName("UTF-8").decode(byteBuffer);
+            request += StandardCharsets.UTF_8.decode(byteBuffer);
         }
 
         /**
@@ -190,7 +192,7 @@ public class NioServer {
                 try {
                     // 将信息发送到targetChannel客户端
                     ((SocketChannel) targetChannel).write(
-                            Charset.forName("UTF-8").encode(request));
+                            StandardCharsets.UTF_8.encode(request));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

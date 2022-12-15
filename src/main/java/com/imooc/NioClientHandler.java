@@ -21,7 +21,7 @@ public class NioClientHandler implements Runnable {
 
     @Override
     public void run() {
-
+        System.out.println("nio handler start");
         try {
             for (;;) {
                 int readyChannels = selector.select();

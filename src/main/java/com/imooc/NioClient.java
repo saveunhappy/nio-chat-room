@@ -29,6 +29,7 @@ public class NioClient {
         // 新开线程，专门负责来接收服务器端的响应数据
         // selector ， socketChannel ， 注册
         Selector selector = Selector.open();
+        System.out.println("client selector--->" + selector);
         socketChannel.configureBlocking(false);
         socketChannel.register(selector, SelectionKey.OP_READ);
         new Thread(new NioClientHandler(selector)).start();
