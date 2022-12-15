@@ -6,44 +6,47 @@ import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class CallableDemo {
-//    public static void main(String[] args) {
-//        ExecutorService executorService = Executors.newFixedThreadPool(5);
-//        ArrayList<Future<String>> resultList = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            Future<String> submit = executorService.submit(new CustomTask());
-//            resultList.add(submit);
-//        }
-//        resultList.forEach(result -> {
-//            try {
-//                System.out.println(result.get());
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//    }
-
-
-
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(5);
-        ArrayList<String> resultList = new ArrayList<>();
+        ArrayList<Future<String>> resultList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Future<String> submit = executorService.submit(new CustomTask());
-            String result = null;
+            resultList.add(submit);
+        }
+        resultList.forEach(result -> {
             try {
-                result = submit.get();
-                resultList.add(result);
+                System.out.println(result.get());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-        }
-        resultList.forEach(System.out::println);
+        });
         executorService.shutdown();
+
+
     }
+//
+//
+//
+//    public static void main(String[] args) {
+//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+//        ArrayList<String> resultList = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            Future<String> submit = executorService.submit(new CustomTask());
+//            String result = null;
+//            try {
+//                result = submit.get();
+//                resultList.add(result);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        resultList.forEach(System.out::println);
+//        executorService.shutdown();
+//    }
 }
 
 class CustomTask implements Callable<String> {
